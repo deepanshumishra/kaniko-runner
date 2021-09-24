@@ -6,7 +6,7 @@ spec:
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
-    args: [ "--dockerfile= Dockerfile",
+    args: [ "--dockerfile=/workspace/Dockerfile",
             "--context=/workspace/",
             "--destination=deepanshu1411/devops-toolkit:1.0.0"]
     volumeMounts:
