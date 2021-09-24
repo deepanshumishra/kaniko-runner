@@ -7,7 +7,7 @@ spec:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
     args: [ "--dockerfile= Dockerfile",
-            "--context=dir://workspace/",
+            "--context=/workspace/",
             "--destination=deepanshu1411/devops-toolkit:1.0.0"]
     volumeMounts:
       - name: kaniko-secret
