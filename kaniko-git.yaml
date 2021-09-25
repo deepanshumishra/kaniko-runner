@@ -6,11 +6,21 @@ spec:
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
+    lifecycle:
+      preStop:
+        exec:
+          command: ["/bin/sh","-c","cat $STACKLOG_PATH"]
+    env:
+      - name: STACKLOG_PATH
+        value: /workspace/kaniko.slog
     args: [ "--context=git://github.com/deepanshumishra/kaniko-runner",
             "--destination=deepanshu1411/devops-toolkit:1.0.0"]
     volumeMounts:
       - name: kaniko-secret
         mountPath: /kaniko/.docker
+      - name: dockerfile-storage
+        mountPath: /workspace
+  terminationGracePeriodSeconds: 30
   restartPolicy: Never
   volumes:
     - name: kaniko-secret
@@ -19,3 +29,6 @@ spec:
         items:
           - key: .dockerconfigjson
             path: config.json
+    - name: dockerfile-storage
+      persistentVolumeClaim:
+        claimName: dockerfile-claim
