@@ -6,14 +6,7 @@ spec:
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
-    lifecycle:
-      preStop:
-        exec:
-          command: ["/bin/sh","-c","cat $STACKLOG_PATH"]
-    env:
-      - name: STACKLOG_PATH
-        value: /workspace/kaniko.slog
-    args: [ "--context=git://github.com/deepanshumishra/kaniko-runner",
+    args: [ "--context=`pwd`/workspace/Dockerfile",
             "--destination=deepanshu1411/devops-toolkit:1.0.0"]
     volumeMounts:
       - name: kaniko-secret
